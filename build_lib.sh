@@ -7,9 +7,9 @@ trap 'display_error; exit 1' ERR
 set -e
 
 # prerequisites
-sudo apt update
-sudo apt upgrade -y
-sudo apt install -y cmake cmake-qt-gui libexpat-dev expat default-jre libdbus-1-dev libboost-all-dev
+# sudo apt update
+# sudo apt upgrade -y
+# sudo apt install -y cmake cmake-qt-gui libexpat-dev expat default-jre libdbus-1-dev libboost-all-dev
 
 # build CommonAPI Runtime Library
 cd capicxx-core-runtime/
@@ -20,6 +20,7 @@ cd ..
 # DBus patch
 wget -N https://dbus.freedesktop.org/releases/dbus/dbus-1.12.16.tar.gz
 tar -xvf dbus-1.12.16.tar.gz
+rm dbus-1.12.16.tar.gz
 for patch in capicxx-dbus-runtime/src/dbus-patches/*.patch
 do
     patch -d dbus-1.12.16/ -p1 <"$patch"

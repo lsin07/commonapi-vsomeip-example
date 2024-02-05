@@ -2,13 +2,29 @@
 This repository is an implementation of the tutorial document  
 https://github.com/COVESA/vsomeip/wiki/vsomeip-in-10-minutes
 
+Check out the documentation above for more information.
+
+## Prerequisites
+
+Required Features:
+- CMake
+- Expat
+- Java 8 Runtime Environment
+- Boost library
+- DBus library
+
+In Debian/Ubuntu, you can install those features with:  
+~~~bash
+sudo apt install -y cmake cmake-qt-gui libexpat-dev expat default-jre libdbus-1-dev libboost-all-dev
+~~~
+
 ## Clone Repos
 
 ~~~bash
 git clone https://github.com/lsin07/commonapi-vsomeip-example.git --recurse-submodules
 ~~~
 
-You need to add `--recurse-submodules` option to import all required CommonAPI repositories.  
+You need to add `--recurse-submodules` option in order to import all required CommonAPI repositories.  
 Or, you can type `git submodule init` and `git submodule update` to get all missing submodules if the reopsitory was cloned without recurse option.
 
 ## Build
@@ -24,6 +40,8 @@ Or, you can type `git submodule init` and `git submodule update` to get all miss
 
 ## Configuration
 Configuration files for server and client application are at `/configs` directory.
+
+Match `"unicast"` address with the address of your machine.
 
 TBA
 
