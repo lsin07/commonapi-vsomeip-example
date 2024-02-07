@@ -48,7 +48,6 @@ int main() {
     app->init();
     app->register_message_handler(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_METHOD_ID, on_message);
     app->offer_service(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID);
-    app->start();
 
     const vsomeip::byte_t its_data[] = { 0x10 };
     payload = vsomeip::runtime::get()->create_payload();
@@ -58,4 +57,6 @@ int main() {
     its_groups.insert(SAMPLE_EVENTGROUP_ID);
     app->offer_event(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, its_groups);
     app->notify(SAMPLE_SERVICE_ID, SAMPLE_INSTANCE_ID, SAMPLE_EVENT_ID, payload);
+    
+    app->start();
 }
