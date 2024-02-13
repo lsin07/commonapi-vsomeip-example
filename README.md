@@ -25,7 +25,7 @@ git clone https://github.com/lsin07/commonapi-vsomeip-example.git --recurse-subm
 ~~~
 
 You need to add `--recurse-submodules` option in order to import all required CommonAPI repositories.  
-Or, you can type `git submodule init` and `git submodule update` to get all missing submodules if the reopsitory was cloned without recurse option.
+Or, you can type `git submodule init` and `git submodule update` to get all missing submodules if the repository was cloned without recurse option.
 
 ## Build
 - Build CommonAPI Libraries ― This may take a while.
@@ -41,9 +41,7 @@ Or, you can type `git submodule init` and `git submodule update` to get all miss
 ## Configuration
 Configuration files for server and client application are at `/configs` directory.
 
-Match `"unicast"` address with the address of your machine.
-
-TBA
+You need to match `"unicast"` address with the address of your machine before running the applications.
 
 ## Run
 - Run Server

@@ -1,3 +1,4 @@
 build
 dbus-*
 install_folder
+.vscode
