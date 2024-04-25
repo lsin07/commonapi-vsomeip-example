@@ -1,9 +1,6 @@
 [submodule "capicxx-core-runtime"]
 	path = capicxx-core-runtime
 	url = https://github.com/GENIVI/capicxx-core-runtime.git
-[submodule "capicxx-dbus-runtime"]
-	path = capicxx-dbus-runtime
-	url = https://github.com/GENIVI/capicxx-dbus-runtime.git
 [submodule "capicxx-someip-runtime"]
 	path = capicxx-someip-runtime
 	url = https://github.com/GENIVI/capicxx-someip-runtime.git
