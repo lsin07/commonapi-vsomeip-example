@@ -6,10 +6,11 @@ Required Features:
 - C Compiler
 - CMake
 - Java Runtime Environment
+- Boost Library
 
 In Debian/Ubuntu, you can install those features with:  
 ~~~bash
-sudo apt install -y build-essential cmake default-jre
+sudo apt install -y build-essential cmake default-jre libboost-all-dev
 ~~~
 
 ## Clone Repos
@@ -46,5 +47,24 @@ Configuration files for server and client application are at `configs` folder un
 
 You need to match `"unicast"` address with the address of your machine before running the applications.
 
+## Build
+Make sure you are on the **project root** directory.
+```bash
+mkdir build
+cd build
+cmake ..
+make
+```
+
 ## Run
-For instructions to execute the project, please refer to the `README.md` on each project directory.
+
+- Run Server
+```bash
+export LD_LIBRARY_PATH=`pwd`/../../lib:$LD_LIBRARY_PATH VSOMEIP_CONFIGURATION=../configs/config_server.json
+./HelloWorldService
+```
+
+- Run Client
+```bash
+export LD_LIBRARY_PATH=`pwd`/../../lib:$LD_LIBRARY_PATH VSOMEIP_CONFIGURATION=../configs/config_client.json
+./HelloWorldClient
