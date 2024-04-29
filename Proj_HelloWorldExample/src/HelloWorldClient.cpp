@@ -14,7 +14,7 @@ int main() {
     // Proxy 생성 - 위치: "local", 이름: "test"
     std::string domain = "local";
     std::string instance = "test";                  // Proxy instance name must be identical with InstanceID in HelloWorld.fdepl
-    std::string connection = "client-sample";       // Connection name must be identical with the value of the key "routing" in config file
+    std::string connection = "HelloWorldClient";    // Connection name must be identical with the value of the key "routing" in config file
     std::shared_ptr <HelloWorldProxy<>> myProxy = runtime->buildProxy<HelloWorldProxy>(domain, instance, connection);
 
     // Checking availability (Proxy) : 생성을 기다림 

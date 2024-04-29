@@ -12,7 +12,7 @@ int main() {
 
     std::string domain = "local";
     std::string instance = "test";                  // Proxy instance name must be identical with InstanceID in HelloWorld.fdepl
-    std::string connection = "service-sample";      // Connection name must be identical with the value of the key "routing" in config file
+    std::string connection = "HelloWorldService";   // Connection name must be identical with the value of the key "routing" in config file
 
     // HelloWorld 서비스의 Stub 클래스 인스턴스 생성
     std::shared_ptr <HelloWorldStubImpl> myService = std::make_shared<HelloWorldStubImpl>();
