@@ -13,7 +13,7 @@ int main() {
 
     // Proxy 생성 - 위치: "local", 이름: "test"
     std::string domain = "local";
-    std::string instance = "commonapi.examples.HelloWorld";
+    std::string instance = "test";
     std::string connection = "client-sample";
     std::shared_ptr <HelloWorldProxy<>> myProxy = runtime->buildProxy<HelloWorldProxy>(domain, instance, connection);
 
@@ -24,14 +24,14 @@ int main() {
     }
     std::cout << "Available ..." << std::endl;
 
-    const std::string name = "World";
     // 메서드 호출 상태 나타내는 Enum type 변수 선언
     CommonAPI::CallStatus callStatus;
     std::string returnMessage;
 
+    const std::string name = "World";
     while (true) {
         // CommonAPI의 Proxy 인스턴스인 myProxy로 sayHello 메서드 호출
-        myProxy->sayHello("Cho", callStatus, returnMessage);
+        myProxy->sayHello(name, callStatus, returnMessage);
         if (callStatus != CommonAPI::CallStatus::SUCCESS) {
             std::cerr << "Remote call failed!\n";
             return -1;

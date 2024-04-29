@@ -11,7 +11,7 @@ int main() {
     std::shared_ptr <CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
 
     std::string domain = "local";
-    std::string instance = "commonapi.HelloWorld";
+    std::string instance = "test";
     std::string connection = "service-sample";
 
     // HelloWorld 서비스의 Stub 클래스 인스턴스 생성
