@@ -3,10 +3,10 @@
 ## Prerequisites
 
 Required Features:
-- C Compiler
+- C/C++ Compiler
 - CMake
 - Java Runtime Environment
-- Boost Library
+- Boost C++ Library
 
 In Debian/Ubuntu, you can install those features with:  
 ~~~bash
@@ -30,7 +30,7 @@ cd commonapi-vsomeip-example
 ~~~
 
 ## Code Generation
-NOTE: The code generators used in this sections are [capicxx-core-tools](https://github.com/COVESA/capicxx-someip-tools/) 
+NOTE: The code generators used in this sections are [capicxx-core-tools](https://github.com/COVESA/capicxx-core-tools/) 
 and [capicxx-someip-tools](https://github.com/COVESA/capicxx-someip-tools) ver. 3.2.14.  
 For further informations, visit https://covesa.github.io/capicxx-core-tools/.
 
