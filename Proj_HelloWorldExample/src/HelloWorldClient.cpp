@@ -1,6 +1,7 @@
 // HelloWorldClient.cpp
 #include <iostream>
 #include <string>
+#include <thread>
 #include <unistd.h>
 #include <CommonAPI/CommonAPI.hpp>
 #include <v1/commonapi/HelloWorldProxy.hpp>
