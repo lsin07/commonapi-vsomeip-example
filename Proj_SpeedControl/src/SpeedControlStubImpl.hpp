@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // SpeedControlStubImpl.hpp
 #ifndef SPEEDCONTROLSTUBIMPL_H
 #define SPEEDCONTROLSTUBIMPL_H
@@ -15,6 +14,3 @@ class SpeedControlStubImpl: public v1_0::Ace::Someip::SpeedControlStubDefault
 };
 
 #endif
-=======
-// SpeedControlStubImpl.hpp
->>>>>>> dev
