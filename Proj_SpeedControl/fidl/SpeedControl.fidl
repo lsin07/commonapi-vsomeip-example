@@ -1,0 +1,62 @@
+/**
+ * ACE Lab. Service Interface Definition
+ *
+ * Service Name : Ace.Someip.SpeedControl
+ * Service Interface Version  : 1.0
+ * File Creation Date : 2024.05.02
+ *
+ **/
+
+package Ace.Someip
+
+interface SpeedControl
+{
+    version {major 1 minor 0}
+
+	<**
+	@description: Notify the warning information (ex. the speed exceeds 50)
+	**>
+    broadcast Warning {
+        out {
+            WarningInfo WarningValue
+        }
+    }
+
+	<**
+	@description: Indicate the current speed value
+	**>
+    attribute UInt32 Speed
+
+	<**
+	@description: Accelerate the speed to the value you want
+	**>
+    method Accelerate {
+        in {
+            UInt32 AccelerateValue
+        }
+        out {
+            ErrorCode Error
+        }
+    }
+
+	<**
+	@description: Reduce the speed by the value you want
+	**>
+    method Break fireAndForget {
+        in {
+            UInt32 BreakValue
+        }
+    }
+
+    enumeration WarningInfo {
+        NOWARNING = 0
+        OVERSPEEDWARNING = 1
+        LOWFUELWARNING = 2
+        ICEWARNING = 3
+    }
+
+    enumeration ErrorCode {
+        NOERROR = 0
+        INVALIDARGUMENT = 1
+    }
+}

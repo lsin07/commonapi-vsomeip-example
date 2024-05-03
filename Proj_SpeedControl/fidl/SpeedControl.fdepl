@@ -1,0 +1,47 @@
+/**
+ * ACE Lab. Service Interface SOME/IP Deployment
+ *
+ * Service Name : Ace.Someip.SpeedControl
+ * File Creation Date : 2024.05.02
+ *
+ **/
+
+import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-SOMEIP_deployment_spec.fdepl"
+import "SpeedControl.fidl"
+
+define org.genivi.commonapi.someip.deployment for interface Ace.Someip.SpeedControl {
+
+    SomeIpServiceID = 4660
+
+    broadcast Warning {
+        SomeIpEventID = 33010     
+        SomeIpEventGroups = { 33010 }
+    }
+
+    attribute Speed {
+        SomeIpGetterID = 3001
+        SomeIpSetterID = 3002
+        SomeIpNotifierID = 33011
+        SomeIpNotifierEventGroups = { 33011 }
+
+        SomeIpAttributeReliable = false
+    }
+
+    method Accelerate {
+        SomeIpMethodID = 3003
+        SomeIpReliable = false
+    }
+
+    method Break {
+        SomeIpMethodID = 3004
+        SomeIpReliable = false
+    }
+}
+
+define org.genivi.commonapi.someip.deployment for provider as MyService {
+
+    instance Ace.Someip.SpeedControl {
+        InstanceId = "Ace.Someip.SpeedControl"
+        SomeIpInstanceID = 22136
+    }
+}
