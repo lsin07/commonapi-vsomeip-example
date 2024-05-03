@@ -32,7 +32,7 @@ define org.genivi.commonapi.someip.deployment for interface Ace.Someip.SpeedCont
         SomeIpReliable = false
     }
 
-    method Break {
+    method Brake {
         SomeIpMethodID = 3004
         SomeIpReliable = false
     }

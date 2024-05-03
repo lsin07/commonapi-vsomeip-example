@@ -42,9 +42,9 @@ interface SpeedControl
 	<**
 	@description: Reduce the speed by the value you want
 	**>
-    method Break fireAndForget {
+    method Brake fireAndForget {
         in {
-            UInt32 BreakValue
+            UInt32 BrakeValue
         }
     }
 
