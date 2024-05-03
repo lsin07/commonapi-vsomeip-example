@@ -17,4 +17,8 @@ int main() {
     std::cout << "Service Registered Successfully." << std::endl;
 
     myService->Warning();
+    
+    while (true) {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+    }
 }

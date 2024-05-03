@@ -15,6 +15,7 @@ int main()
 
     std::shared_ptr<SpeedControlProxy<>> myProxy = runtime->buildProxy <SpeedControlProxy> (domain, instance, connection);
 
+    std::cout << "Waiting for service to become available..." << std::endl;
     while (!myProxy->isAvailable()) {
         std::this_thread::sleep_for(std::chrono::microseconds(10));
     }
@@ -42,7 +43,15 @@ int main()
         std::cout << "Recieved Warning: " << warningMessage << std::endl;
     });
 
+    uint32_t brakeValue = 20;
+    CommonAPI::CallStatus callStatus;
+
     while (true) {
+        myProxy->Brake(brakeValue, callStatus);
+        if (callStatus != CommonAPI::CallStatus::SUCCESS) {
+            std::cerr << "Remote call failed!\n";
+            return -1;
+        }
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
