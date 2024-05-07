@@ -34,60 +34,58 @@ int main()
         has recieved.
     */
     myProxy->getWarningEvent().subscribe([&](const SpeedControl::WarningInfo& warning) {
-        std::string warningMessage;
+        std::string warningmsg = "[R] Recieved Warning: ";
         switch (warning) {
             case SpeedControl::WarningInfo::NOWARNING:
-                warningMessage = "No warning";
                 break;
             case SpeedControl::WarningInfo::OVERSPEEDWARNING:
-                warningMessage = "Speed exceeds limit!";
+                std::cout << warningmsg << "OVERSPEEDWARNING" << std::endl;
                 break;
             case SpeedControl::WarningInfo::LOWFUELWARNING:
-                warningMessage = "Low fuel!";
+                std::cout << warningmsg << "LOWFUELWARNING" << std::endl;
                 break;
             case SpeedControl::WarningInfo::ICEWARNING:
-                warningMessage = "Icy conditions!";
+                std::cout << warningmsg << "ICEWARNING" << std::endl;
                 break;
             default:
-                warningMessage = "Unknown warning";
+                std::cout << "[R] ERROR - Unknown Warning!" << std::endl;
                 break;
         }
-        std::cout << "[R] Recieved Warning: " << warningMessage << std::endl;
+    });
+
+    /*
+    --- 5. Set subscription to speed attribute change event ---
+        This subscriber will act identically with the warning event subsriber.
+        The event will be fired by the attribute notifier whenever the attribute value has changed,
+        which means this listener function will be called only when the speed value has changed.
+    */
+    myProxy->getSpeedAttribute().getChangedEvent().subscribe([](const uint32_t& speed) {
+        std::cout << "[R] Current Speed: " << speed << std::endl;
     });
 
     // set required parameter variables
     uint32_t brakeValue = 1;
-    uint32_t speed;
-    uint32_t acc = 2;
+    uint32_t accValue = 2;
     SpeedControl::ErrorCode errorCode;
     CommonAPI::CallStatus callStatus;
 
-    // --- 5. main loop ---
+    // --- 6. main loop ---
     while (true) {
 
-        // --- 5-1. Call getter to get the value of 'Speed' attribute ---
-        myProxy->getSpeedAttribute().getValue(callStatus, speed);
-        if (callStatus != CommonAPI::CallStatus::SUCCESS) {
-            std::cerr << "Remote call failed!\n";
-            return -1;
-        }
-        std::cout << "[R] Current Speed: " << speed << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-
-        // --- 5-2. Call method 'Accelerate' ---
+        // --- 6-1. Call method 'Accelerate' ---
         // This method increases the speed by '_accelerateValue'. More infos are at 'SpeedControlStubImpl.cpp'.
-        myProxy->Accelerate(acc, callStatus, errorCode);
+        myProxy->Accelerate(accValue, callStatus, errorCode);
         if (callStatus != CommonAPI::CallStatus::SUCCESS) {
             std::cerr << "Remote call failed!\n";
             return -1;
         }
         // check if the return of the method is NOERROR.
         if (errorCode == SpeedControl::ErrorCode::NOERROR)
-            std::cout << "[T] Accelerate request sent successfully with value " << acc << std::endl;
+            std::cout << "[T] Accelerate request sent successfully with value " << accValue << std::endl;
         else std::cout << "[T] Accelerate request sent with invalid value!" << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));
 
-        // --- 5-3. Call method 'Brake' ---
+        // --- 6-2. Call method 'Brake' ---
         // This method decreases the speed by '_brakeValue'. More infos are at 'SpeedControlStubImpl.cpp'.
         myProxy->Brake(brakeValue, callStatus);
         if (callStatus != CommonAPI::CallStatus::SUCCESS) {

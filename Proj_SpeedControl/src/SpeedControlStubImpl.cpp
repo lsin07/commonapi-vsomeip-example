@@ -7,17 +7,26 @@ SpeedControlStubImpl::~SpeedControlStubImpl() { }
 using namespace v1::Ace::Someip;
 
 /* # Warning
- * @brief Fire warning event every 5 seconds.
+ * @brief Fire warning event every 1 seconds.
  * @return No return.
  */
 void SpeedControlStubImpl::Warning() {
-    SpeedControl::WarningInfo warning = SpeedControl::WarningInfo::LOWFUELWARNING;    // set warning info
-    
-    // broadcast current warning every 5 seconds indefinitely
+    SpeedControl::WarningInfo warning;
+    uint32_t curr_speed;
+    std::string warningtext;
+
     while (true) {
-        fireWarningEvent(warning);
-        std::cout << "[T] warning broadcasted: LOWFUELWARNING" << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(5));
+        curr_speed = SpeedControlStubDefault::getSpeedAttribute();  // get current speed
+        if (curr_speed > 50) {
+            warning = SpeedControl::WarningInfo::OVERSPEEDWARNING;  // if current speed > 50, fire overspeed warning event
+            warningtext = "OVERSPEEDWARNING";
+        }
+        else {
+            warning = SpeedControl::WarningInfo::NOWARNING;         // if no warning condition is set, fire nowarning event
+            warningtext = "NOWARNING";
+        }
+        std::cout << "[T] warning broadcasted: " << warningtext << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(1));       // wait 1 second
     }
 };
 
@@ -29,10 +38,10 @@ void SpeedControlStubImpl::Warning() {
  */
 void SpeedControlStubImpl::Brake(const std::shared_ptr<CommonAPI::ClientId> _client, uint32_t _brakeValue) {
     uint32_t speed = SpeedControlStubDefault::getSpeedAttribute();   // get current speed
-    uint32_t new_speed = speed - _brakeValue;    // calculate desired speed
+    uint32_t new_speed = 0;
+    if (speed >= _brakeValue) new_speed = speed - _brakeValue;    // calculate desired speed
     std::cout << "[R] Brake request accepted -- reducing speed to: " << new_speed << std::endl;
     SpeedControlStubDefault::setSpeedAttribute(new_speed);    // set speed value to new speed
-    fireSpeedAttributeChanged(new_speed);    // notify speed change
 };
 
 /* # Accelerate
@@ -47,6 +56,5 @@ void SpeedControlStubImpl::Accelerate(const std::shared_ptr<CommonAPI::ClientId>
     uint32_t new_speed = _accelerateValue + speed;    // calculate desired speed
     std::cout << "[R] Accelerate request accepted -- accelerating to: " << new_speed << std::endl;
     SpeedControlStubDefault::setSpeedAttribute(new_speed);    // set speed value to new speed
-    fireSpeedAttributeChanged(new_speed);    // notify speed change
     _reply(SpeedControl::ErrorCode::NOERROR);    // return error code
 };
