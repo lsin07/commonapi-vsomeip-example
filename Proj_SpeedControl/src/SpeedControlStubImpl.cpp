@@ -25,6 +25,7 @@ void SpeedControlStubImpl::Warning() {
             warning = SpeedControl::WarningInfo::NOWARNING;         // if no warning condition is set, fire nowarning event
             warningtext = "NOWARNING";
         }
+        SpeedControlStubDefault::fireWarningEvent(warning);
         std::cout << "[T] warning broadcasted: " << warningtext << std::endl;
         std::this_thread::sleep_for(std::chrono::seconds(1));       // wait 1 second
     }
