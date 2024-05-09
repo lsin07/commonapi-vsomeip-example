@@ -33,6 +33,8 @@ int main()
         In other words, the lambda function defined below will be executed only when the warning message
         has recieved.
     */
+    bool overspeedWarningReceived = false;
+
     myProxy->getWarningEvent().subscribe([&](const SpeedControl::WarningInfo& warning) {
         std::string warningmsg = "[R] Recieved Warning: ";
         switch (warning) {
@@ -40,6 +42,7 @@ int main()
                 break;
             case SpeedControl::WarningInfo::OVERSPEEDWARNING:
                 std::cout << warningmsg << "OVERSPEEDWARNING" << std::endl;
+                overspeedWarningReceived = true;
                 break;
             case SpeedControl::WarningInfo::LOWFUELWARNING:
                 std::cout << warningmsg << "LOWFUELWARNING" << std::endl;
@@ -64,35 +67,39 @@ int main()
     });
 
     // set required parameter variables
-    uint32_t brakeValue = 1;
-    uint32_t accValue = 2;
+    uint32_t brakeValue = 20;
+    uint32_t accValue = 10;
     SpeedControl::ErrorCode errorCode;
     CommonAPI::CallStatus callStatus;
 
     // --- 6. main loop ---
     while (true) {
 
+        if (!overspeedWarningReceived){
         // --- 6-1. Call method 'Accelerate' ---
         // This method increases the speed by '_accelerateValue'. More infos are at 'SpeedControlStubImpl.cpp'.
-        myProxy->Accelerate(accValue, callStatus, errorCode);
-        if (callStatus != CommonAPI::CallStatus::SUCCESS) {
-            std::cerr << "Remote call failed!\n";
-            return -1;
-        }
+            myProxy->Accelerate(accValue, callStatus, errorCode);
+            if (callStatus != CommonAPI::CallStatus::SUCCESS) {
+                std::cerr << "Remote call failed!\n";
+                return -1;
+            }
         // check if the return of the method is NOERROR.
-        if (errorCode == SpeedControl::ErrorCode::NOERROR)
-            std::cout << "[T] Accelerate request sent successfully with value " << accValue << std::endl;
-        else std::cout << "[T] Accelerate request sent with invalid value!" << std::endl;
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+            if (errorCode == SpeedControl::ErrorCode::NOERROR)
+                std::cout << "[T] Accelerate request sent successfully with value " << accValue << std::endl;
+            else std::cout << "[T] Accelerate request sent with invalid value!" << std::endl;
+        }
 
+        else{
         // --- 6-2. Call method 'Brake' ---
         // This method decreases the speed by '_brakeValue'. More infos are at 'SpeedControlStubImpl.cpp'.
-        myProxy->Brake(brakeValue, callStatus);
-        if (callStatus != CommonAPI::CallStatus::SUCCESS) {
-            std::cerr << "Remote call failed!\n";
-            return -1;
-        }
-        std::cout << "[T] Brake request sent with value " << brakeValue << std::endl;
+            myProxy->Brake(brakeValue, callStatus);
+            if (callStatus != CommonAPI::CallStatus::SUCCESS) {
+                std::cerr << "Remote call failed!\n";
+                return -1;
+            }
+            std::cout << "[T] Brake request sent with value " << brakeValue << std::endl;
+            overspeedWarningReceived = false;
+        } 
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 }
