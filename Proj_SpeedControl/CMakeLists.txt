@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pthread -std=c++11")
 
 # To supress undefined error, may not a proper solution.
-add_definitions(-DUNDEFINED_EVENTGROUP_ID=0xFFFF)
+add_definitions(-DUNDEFINED_EVENTGROUP_ID=0x80F3)
 
 include_directories(
     src-gen
