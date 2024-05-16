@@ -2,6 +2,7 @@
 #ifndef SPEEDCONTROLSTUBIMPL_H_
 #define SPEEDCONTROLSTUBIMPL_H_
 
+#include <thread>
 #include <CommonAPI/CommonAPI.hpp>
 #include <v1/Ace/Someip/SpeedControlStubDefault.hpp>
 
