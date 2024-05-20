@@ -34,7 +34,14 @@ NOTE: The code generators used in this sections are [capicxx-core-tools](https:/
 and [capicxx-someip-tools](https://github.com/COVESA/capicxx-someip-tools) ver. 3.2.14.  
 For further informations, visit https://covesa.github.io/capicxx-core-tools/.
 
-On the **project root** directory, run:
+Install code generators:  
+(You must have the package `zip` installed on your machine. If not, install it with `sudo apt install zip` before running the script.)
+~~~bash
+cd cgen/
+./install_cgen.sh
+~~~
+
+On the **project** directory (Ex. Proj_HelloWorldExample/), run:
 ```bash
 ../cgen/commonapi_core_generator/commonapi-core-generator-linux-x86_64 -sk ./fidl/HelloWorld.fidl
 ../cgen/commonapi_someip_generator/commonapi-someip-generator-linux-x86_64 ./fidl/HelloWorld.fdepl
