@@ -23,6 +23,17 @@ You need to add `--recurse-submodules` option in order to import all required Co
 Or, you can type `git submodule init` and `git submodule update` to get all missing submodules if the repository was cloned without recurse option.
 
 ## Build Library
+<details>
+<summary><b>(open/close) for developers using gcc12 or higher</b></summary>
+
+If you are using gcc12 or above, you need to adjust some build configurations.
+
+1. Add a line `#include <string>` to the header file `capicxx-core-runtime/include/CommonAPI/Types.hpp`.
+2. Add a line `SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-error=stringop-overflow")` to the file `vsomeip/CMakeLists.txt` to supress overflow error.
+
+Refer to the *<a href="https://github.com/COVESA/capicxx-core-runtime/issues/47">issue #47</a> of COVESA/capicxx-core-runtime* and *<a href="https://github.com/COVESA/vsomeip/issues/527">issue #527</a> of COVESA/vsomeip* for further informations.
+</details>
+
 Build CommonAPI Libraries ― This may take a while.
 ~~~bash
 cd commonapi-vsomeip-example
