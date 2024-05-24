@@ -6,7 +6,7 @@
  *
  **/
 
-import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-SOMEIP_deployment_spec.fdepl"
+import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-4-SOMEIP_deployment_spec.fdepl"
 import "SpeedControl.fidl"
 
 define org.genivi.commonapi.someip.deployment for interface Ace.Someip.SpeedControl {
