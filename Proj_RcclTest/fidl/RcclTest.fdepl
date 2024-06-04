@@ -1,0 +1,20 @@
+import "platform:/plugin/org.genivi.commonapi.someip/deployment/CommonAPI-4-SOMEIP_deployment_spec.fdepl"
+import "RcclTest.fidl"
+
+define org.genivi.commonapi.someip.deployment for interface rccltest.RcclTest {
+
+    SomeIpServiceID = 4660
+
+    broadcast hello {
+        SomeIpEventID = 33010     
+        SomeIpEventGroups = { 33010 }
+    }
+}
+
+define org.genivi.commonapi.someip.deployment for provider as MyService {
+
+    instance rccltest.RcclTest {
+        InstanceId = "RcclTest"
+        SomeIpInstanceID = 22136
+    }
+}

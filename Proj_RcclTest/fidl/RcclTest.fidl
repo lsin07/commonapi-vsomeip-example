@@ -1,0 +1,11 @@
+package rccltest
+
+interface RcclTest
+{
+    version {major 1 minor 0}
+    broadcast hello {
+        out {
+            String message
+        }
+    }
+}
