@@ -34,14 +34,14 @@ If you are using gcc12 or above, you need to adjust some build configurations.
 Refer to the *<a href="https://github.com/COVESA/capicxx-core-runtime/issues/47">issue #47</a> of COVESA/capicxx-core-runtime* and *<a href="https://github.com/COVESA/vsomeip/issues/527">issue #527</a> of COVESA/vsomeip* for further informations.
 </details>
 
-Build CommonAPI Libraries ― This may take a while.
+Build CommonAPI Libraries ― This may take few minutes.
 ~~~bash
 cd commonapi-vsomeip-example
 ./build_lib.sh
 ~~~
 
 ## Code Generation
-NOTE: The code generators used in this sections are [capicxx-core-tools](https://github.com/COVESA/capicxx-core-tools/) 
+NOTE: The code generators used in this section are [capicxx-core-tools](https://github.com/COVESA/capicxx-core-tools/) 
 and [capicxx-someip-tools](https://github.com/COVESA/capicxx-someip-tools) ver. 3.2.15.  
 For further informations, visit https://covesa.github.io/capicxx-core-tools/.
 
