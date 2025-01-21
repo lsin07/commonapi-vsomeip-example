@@ -11,29 +11,16 @@ set -e
 # sudo apt upgrade -y
 # sudo apt install -y cmake cmake-qt-gui libexpat-dev expat default-jre libdbus-1-dev libboost-all-dev
 
-# build CommonAPI
-cd capicxx-core-runtime
-mkdir -p build
-cd build
-cmake ..
-make
+cmake -S capicxx-core-runtime/ -B capicxx-core-runtime/build/
+cmake --build capicxx-core-runtime/build/
 
-# build vsomeip
-cd ../../vsomeip
-mkdir -p build
-cd build
-cmake ..
-make
+cmake -S vsomeip/ -B vsomeip/build/
+cmake --build vsomeip/build/
 
-# build commonapi someip rt
-cd ../../capicxx-someip-runtime
-mkdir -p build
-cd build
-cmake -DUSE_INSTALLED_COMMONAPI=OFF ..
-make
+cmake -DUSE_INSTALLED_COMMONAPI=OFF -S capicxx-someip-runtime/ -B capicxx-someip-runtime/build/
+cmake --build capicxx-someip-runtime/build/
 
 # copy libraries into common library directory
-cd ../..
 mkdir -p lib
 cp capicxx-core-runtime/build/lib* lib/
 cp vsomeip/build/lib* lib/
