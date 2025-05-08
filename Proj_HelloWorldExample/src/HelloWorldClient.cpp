@@ -2,44 +2,53 @@
 #include <iostream>
 #include <string>
 #include <thread>
-#include <unistd.h>
-#include <CommonAPI/CommonAPI.hpp>
-#include <v1/commonapi/HelloWorldProxy.hpp>
 
-using namespace v1_0::commonapi;
+#ifndef _WIN32
+#include <unistd.h>
+#endif
+
+#include <CommonAPI/CommonAPI.hpp>
+#include <v0/commonapi/examples/HelloWorldProxy.hpp>
+
+using namespace v0::commonapi::examples;
 
 int main() {
-    // Runtime Instance 가져오기
-    std::shared_ptr <CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
+    CommonAPI::Runtime::setProperty("LogContext", "E01C");
+    CommonAPI::Runtime::setProperty("LogApplication", "E01C");
+    CommonAPI::Runtime::setProperty("LibraryBase", "HelloWorld");
 
-    // Proxy 생성 - 위치: "local", 이름: "test"
+    std::shared_ptr < CommonAPI::Runtime > runtime = CommonAPI::Runtime::get();
+
     std::string domain = "local";
-    std::string instance = "test";                  // Proxy instance name must be identical with InstanceID in HelloWorld.fdepl
-    std::string connection = "HelloWorldClient";    // Connection name must be identical with the value of the key "routing" in config file
-    std::shared_ptr <HelloWorldProxy<>> myProxy = runtime->buildProxy<HelloWorldProxy>(domain, instance, connection);
+    std::string instance = "commonapi.examples.HelloWorld";
+    std::string connection = "client-sample";
 
-    // Checking availability (Proxy) : 생성을 기다림 
+    std::shared_ptr<HelloWorldProxy<>> myProxy = runtime->buildProxy<HelloWorldProxy>(domain,
+            instance, connection);
+
     std::cout << "Checking availability!" << std::endl;
-    while (!myProxy->isAvailable()) {
+    while (!myProxy->isAvailable())
         std::this_thread::sleep_for(std::chrono::microseconds(10));
-    }
-    std::cout << "Available ..." << std::endl;
+    std::cout << "Available..." << std::endl;
 
-    // 메서드 호출 상태 나타내는 Enum type 변수 선언
+    const std::string name = "World";
     CommonAPI::CallStatus callStatus;
     std::string returnMessage;
 
-    const std::string name = "World";
+    CommonAPI::CallInfo info(1000);
+    info.sender_ = 1234;
+
     while (true) {
-        // CommonAPI의 Proxy 인스턴스인 myProxy로 sayHello 메서드 호출
-        myProxy->sayHello(name, callStatus, returnMessage);
+        myProxy->sayHello(name, callStatus, returnMessage, &info);
         if (callStatus != CommonAPI::CallStatus::SUCCESS) {
             std::cerr << "Remote call failed!\n";
             return -1;
         }
-        // 반환 메시지 출력
+        info.timeout_ = info.timeout_ + 1000;
+
         std::cout << "Got message: '" << returnMessage << "'\n";
         std::this_thread::sleep_for(std::chrono::seconds(1));
     }
+
     return 0;
 }

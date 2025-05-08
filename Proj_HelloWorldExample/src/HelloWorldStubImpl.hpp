@@ -3,15 +3,15 @@
 #define HELLOWORLDSTUBIMPL_H_
 
 #include <CommonAPI/CommonAPI.hpp>
-#include <v1/commonapi/HelloWorldStubDefault.hpp>
+#include <v0/commonapi/examples/HelloWorldStubDefault.hpp>
 
-// Stub 클래스 정의
-class HelloWorldStubImpl: public v1_0::commonapi::HelloWorldStubDefault
-{
-    public:
-        HelloWorldStubImpl();
-        virtual ~HelloWorldStubImpl();
-        virtual void sayHello(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _name, sayHelloReply_t _reply);
+class HelloWorldStubImpl: public v0_1::commonapi::examples::HelloWorldStubDefault {
+
+public:
+    HelloWorldStubImpl();
+    virtual ~HelloWorldStubImpl();
+
+    virtual void sayHello(const std::shared_ptr<CommonAPI::ClientId> _client, std::string _name, sayHelloReply_t _return);
+
 };
-
-#endif /*HELLOWORLDSTUBIMPL_H_*/
+#endif /* HELLOWORLDSTUBIMPL_H_ */
