@@ -33,5 +33,26 @@ cmake --build $BUILD_DIR/$CAPI_CORE_PATH $CMAKE_BUILD_OPTIONS
 cmake --build $BUILD_DIR/$VSOMEIP_PATH $CMAKE_BUILD_OPTIONS
 cmake --build $BUILD_DIR/$CAPI_SOMEIP_PATH $CMAKE_BUILD_OPTIONS
 
+# download cgen
+if [ ! -d "cgen" ]; then
+    mkdir cgen/
+fi
+if [ ! -d "cgen/commonapi_core_generator" ]; then
+    wget https://github.com/COVESA/capicxx-core-tools/releases/download/3.2.15/commonapi_core_generator.zip -O cgen/commonapi_core_generator.zip
+    unzip cgen/commonapi_core_generator.zip -d cgen/commonapi_core_generator
+    rm cgen/commonapi_core_generator.zip
+else
+    echo "commonapi_core_generator already exists."
+fi
+if [ ! -d "cgen/commonapi_someip_generator" ]; then
+    wget https://github.com/COVESA/capicxx-someip-tools/releases/download/3.2.15/commonapi_someip_generator.zip -O cgen/commonapi_someip_generator.zip
+    unzip cgen/commonapi_someip_generator.zip -d cgen/commonapi_someip_generator
+    rm cgen/commonapi_someip_generator.zip
+else
+    echo "commonapi_someip_generator already exists."
+fi
+
 # clean
 rm -rf build/
+
+echo "Done."

@@ -41,24 +41,17 @@ cd commonapi-vsomeip-example
 ~~~
 
 ## Code Generation
-NOTE: The code generators used in this section are [capicxx-core-tools](https://github.com/COVESA/capicxx-core-tools/) 
-and [capicxx-someip-tools](https://github.com/COVESA/capicxx-someip-tools) ver. 3.2.15.  
-For further informations, visit https://covesa.github.io/capicxx-core-tools/.
-
-Install code generators:  
-(You must have the package `zip` installed on your machine. If not, install it with `sudo apt install zip` before running the script.)
-~~~bash
-cd cgen/
-./get_cgen.sh
-~~~
+> [!NOTE]
+> The code generators used in this section are [capicxx-core-tools](https://github.com/COVESA/capicxx-core-tools/) 
+> and [capicxx-someip-tools](https://github.com/COVESA/capicxx-someip-tools) ver. 3.2.15.  
+> For further informations, visit https://covesa.github.io/capicxx-core-tools/.
 
 On the **project** directory (Ex. Proj_HelloWorldExample/), run:
 ```bash
 ../cgen/commonapi_core_generator/commonapi-core-generator-linux-x86_64 -sk ./fidl/HelloWorld.fidl
 ../cgen/commonapi_someip_generator/commonapi-someip-generator-linux-x86_64 ./fidl/HelloWorld.fdepl
 ```
-Select the code generator properly according to your system.  
-For example, run `commonapi-core-generator-windows-x86_64.exe` instead of `commonapi-core-generator-linux-x86_64` if you're on x86-64 Windows system.
+Select the code generator properly according to your system.
 
 ## Configuration
 Configuration files for server and client application are at `configs` folder under each project directory.
@@ -68,21 +61,19 @@ You need to match `"unicast"` address with the address of your machine before ru
 ## Build
 Make sure you are on the **project root** directory.
 ```bash
-mkdir build
-cd build
-cmake ..
-make
+cmake -Bbuild .
+cmake --build build/
 ```
 
 ## Run
 
 - Run Server
 ```bash
-export LD_LIBRARY_PATH=`pwd`/../../lib:$LD_LIBRARY_PATH VSOMEIP_CONFIGURATION=../configs/config_service.json
-./HelloWorldService
+export LD_LIBRARY_PATH=$PWD/../lib:$LD_LIBRARY_PATH VSOMEIP_CONFIGURATION=configs/config_service.json
+./build/HelloWorldService
 ```
 
 - Run Client
 ```bash
-export LD_LIBRARY_PATH=`pwd`/../../lib:$LD_LIBRARY_PATH VSOMEIP_CONFIGURATION=../configs/config_client.json
-./HelloWorldClient
+export LD_LIBRARY_PATH=$PWD/../lib:$LD_LIBRARY_PATH VSOMEIP_CONFIGURATION=configs/config_client.json
+./build/HelloWorldClient
