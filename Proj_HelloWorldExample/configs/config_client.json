@@ -10,11 +10,11 @@
     "applications" :
     [
         {
-            "name" : "HelloWorldClient",
+            "name" : "client-sample",
             "id" : "0x1343"
         },
         {
-            "name" : "HelloWorldService",
+            "name" : "service-sample",
             "id" : "0x1277"
         }
     ],
