@@ -2,7 +2,11 @@
 #include <iostream>
 #include <string>
 #include <thread>
+
+#ifndef _WIN32
 #include <unistd.h>
+#endif
+
 #include <CommonAPI/CommonAPI.hpp>
 #include <v1/Ace/Someip/SpeedControlProxy.hpp>
 
@@ -10,6 +14,7 @@ using namespace v1_0::Ace::Someip;
 
 int main()
 {
+    CommonAPI::Runtime::setProperty("LibraryBase", "SpeedControl");
     // --- 1. Get a pointer to the runtime object ---
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
     

@@ -1,11 +1,14 @@
 // SpeedControlService.cpp
 #include <iostream>
 #include <thread>
+
 #include <CommonAPI/CommonAPI.hpp>
 #include "SpeedControlStubImpl.hpp"
 
 int main() 
 {
+    CommonAPI::Runtime::setProperty("LibraryBase", "SpeedControl");
+
     // --- 1. Get a pointer to the runtime object ---
     std::shared_ptr<CommonAPI::Runtime> runtime = CommonAPI::Runtime::get();
 
@@ -16,8 +19,15 @@ int main()
     std::string connection = "SpeedControlService";
 
     std::shared_ptr<SpeedControlStubImpl> myService = std::make_shared<SpeedControlStubImpl>();
-    runtime->registerService(domain, instance, myService, connection);
-    std::cout << "Service Registered Successfully." << std::endl;
+    bool successfullyRegistered = runtime->registerService(domain, instance, myService, connection);
+
+    while (!successfullyRegistered) {
+        std::cout << "Register Service failed, trying again in 100 milliseconds..." << std::endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        successfullyRegistered = runtime->registerService(domain, instance, myService, connection);
+    }
+
+    std::cout << "Successfully Registered Service!" << std::endl;
 
     // --- 3. Initiate Warning event generator of the service ---
     myService->Warning();
@@ -28,6 +38,7 @@ int main()
         'SpeedControlStubImpl.cpp'. Just for making sure that the service app is up.
     */
     while (true) {
-        std::this_thread::sleep_for(std::chrono::seconds(1));
+        std::cout << "Waiting for calls... (Abort with CTRL+C)" << std::endl;
+        std::this_thread::sleep_for(std::chrono::seconds(60));
     }
 }
